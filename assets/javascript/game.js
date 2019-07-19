@@ -1,4 +1,7 @@
-
+var lettersPickedByUser = document.getElementById("letters-picked");
+var underscores = document.getElementById("underscores");
+var guessRemaining = document.getElementById("guess-remaining");
+var computerChoice = document.getElementById("computer-word");
 
 var game = {
     wins: 0,
@@ -11,53 +14,68 @@ var game = {
     wordOptions: ["mountain", "peak", "pinetree", "lake", "tent", "hike"],
 
     isLetterMatching: function (letter) {
-        for (let i = 0; i < this.computerPick.length; i++) {
-            if(letter === this.computerPick[i]){
-                this.underscoreArray[i] = this.computerPick[i];
-            } else {
-                this.numberOfGuesses = this.numberOfGuesses - 1;
+        var matched = false;
+        if(this.lettersGuessed.includes(letter)){
+            matched = true;
+        } 
+        else {
+            for (let i = 0; i < this.computerPick.length; i++) {
+                if (letter === this.computerPick[i]) {
+                    this.underscoreArray[i] = this.computerPick[i];
+                    this.lettersGuessed.push(letter);
+                    matched = true;
+                }
             }
-        }         
+        }    
+        if (matched === false) {
+            this.numberOfGuesses--;
+        }
         return this.printGuessedWord();
     },
 
     printGuessedWord: function () {
         var result = "";
         for (let index = 0; index < this.underscoreArray.length; index++) {
-            result += "<span>"+this.underscoreArray[index]+"</span>&nbsp;";           
+            result += " " + this.underscoreArray[index] + " ";
         }
-            return result;
+        return result;
     },
 
     isWordComplete: function () {
-        if(!this.underscoreArray.includes("_")){
+        if (!this.underscoreArray.includes("_")) {
             this.wins++;
+            this.computerPick = "";
+            this.userPick = "";
+            this.numberOfGuesses = 12;
+            this.underscoreArray = [];
+            this.lettersGuessed = [];
             return true;
         } else {
             return false;
         }
     },
 
-    noGuessesLeft: function (){
-        if(this.numberOfGuesses === 0){
+    noGuessesLeft: function () {
+        if (this.numberOfGuesses === 0) {
+            this.losses++;
             return true;
         }
-            return false;
+        return false;
     },
 
     computerPick: function () {
         // Randomly chooses a choice from the options array. This is the Computer's guess.
         game.computerPick = this.wordOptions[Math.floor(Math.random() * this.wordOptions.length)];
         for (let index = 0; index < this.computerPick.length; index++) {
-            this.underscoreArray.push("_");          
+            this.underscoreArray.push("_");
         }
         return game.computerPick;
     }
 
 }
-var computerChoice = document.getElementById("computer-word");
+
 computerChoice.textContent = game.computerPick();
-document.getElementById("underscores").innerHTML = game.printGuessedWord();
+underscores.textContent = game.printGuessedWord();
 
 document.onkeyup = function (event) {
 
@@ -66,8 +84,8 @@ document.onkeyup = function (event) {
 
     game.lettersGuessed.push(userGuess);
 
-    document.getElementById("letters-picked").innerHTML += userGuess; 
-    document.getElementById("underscores").innerHTML = game.isLetterMatching(userGuess);
-    document.getElementById("guess-remaining").innerHTML = game.numberOfGuesses;
+    lettersPickedByUser.textContent += userGuess;
+    underscores.textContent = game.isLetterMatching(userGuess);
+    guessRemaining.textContent = game.numberOfGuesses;
 
 }
