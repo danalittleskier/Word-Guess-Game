@@ -1,7 +1,5 @@
 
 
-
-
 var game = {
     wins: 0,
     losses: 0,
@@ -17,7 +15,7 @@ var game = {
             if(letter === this.computerPick[i]){
                 this.underscoreArray[i] = this.computerPick[i];
             } else {
-                this.numberOfGuesses--;
+                this.numberOfGuesses = this.numberOfGuesses - 1;
             }
         }         
         return this.printGuessedWord();
@@ -59,6 +57,7 @@ var game = {
 }
 var computerChoice = document.getElementById("computer-word");
 computerChoice.textContent = game.computerPick();
+document.getElementById("underscores").innerHTML = game.printGuessedWord();
 
 document.onkeyup = function (event) {
 
@@ -66,8 +65,9 @@ document.onkeyup = function (event) {
     var userGuess = event.key.toLowerCase();
 
     game.lettersGuessed.push(userGuess);
+
     document.getElementById("letters-picked").innerHTML += userGuess; 
-    document.getElementById("underscores").innerHTML = game.printGuessedWord();
-    document.getElementById("letters").innerHTML = game.isLetterMatching(userGuess);
+    document.getElementById("underscores").innerHTML = game.isLetterMatching(userGuess);
+    document.getElementById("guess-remaining").innerHTML = game.numberOfGuesses;
 
 }

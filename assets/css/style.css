@@ -1,5 +1,5 @@
 body {
-    /* background-image: url("../images/fresh_snow.png");  */
+
     height: 100%;
     margin: 0;
     padding: 0;
@@ -9,8 +9,11 @@ body {
     line-height: 150%;
     
 }
-
-h1 {
+.jumbotron {
+    background-image: url("../images/dolomites.jpg"); 
+    text-align: center;
+}
+/* h1 {
     color:#ffffff;
     background-color: #4aaaa5;  
     text-align: center;
@@ -21,7 +24,7 @@ h1 {
     float: left;
     margin-bottom: 0;
 
-}
+} */
 
 h3 {
     color: #4aaaa5;
