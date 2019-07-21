@@ -1,7 +1,9 @@
-var lettersPickedByUser = document.getElementById("letters-picked");
-var underscores = document.getElementById("underscores");
-var guessRemaining = document.getElementById("guess-remaining");
-var computerChoice = document.getElementById("computer-word");
+var lettersPickedByUserDiv = document.getElementById("letters-picked");
+var underscoresDiv = document.getElementById("underscores");
+var guessRemainingDiv = document.getElementById("guess-remaining");
+var computerChoiceDiv = document.getElementById("computer-word");
+var lossesDiv = document.getElementById("losses");
+var winsDiv = document.getElementById("wins");
 
 var game = {
     wins: 0,
@@ -11,10 +13,11 @@ var game = {
     numberOfGuesses: 12,
     underscoreArray: [],
     lettersGuessed: [],
-    wordOptions: ["mountain", "peak", "pinetree", "lake", "tent", "hike"],
+    wordOptions: ["mountain", "peak", "pinetree", "lake", "tent", "hike", "raft", "forest"],
 
     isLetterMatching: function (letter) {
         var matched = false;
+
         if(this.lettersGuessed.includes(letter)){
             matched = true;
         } 
@@ -44,15 +47,18 @@ var game = {
     isWordComplete: function () {
         if (!this.underscoreArray.includes("_")) {
             this.wins++;
-            this.computerPick = "";
-            this.userPick = "";
-            this.numberOfGuesses = 12;
-            this.underscoreArray = [];
-            this.lettersGuessed = [];
             return true;
         } else {
             return false;
         }
+    },
+
+    playNewWord: function(){
+        this.computerPick = "";
+        this.userPick = "";
+        this.numberOfGuesses = 12;
+        this.underscoreArray = [];
+        this.lettersGuessed = [];
     },
 
     noGuessesLeft: function () {
@@ -63,7 +69,7 @@ var game = {
         return false;
     },
 
-    computerPick: function () {
+    computerChoice: function () {
         // Randomly chooses a choice from the options array. This is the Computer's guess.
         game.computerPick = this.wordOptions[Math.floor(Math.random() * this.wordOptions.length)];
         for (let index = 0; index < this.computerPick.length; index++) {
@@ -74,18 +80,57 @@ var game = {
 
 }
 
-computerChoice.textContent = game.computerPick();
-underscores.textContent = game.printGuessedWord();
+computerChoiceDiv.textContent = game.computerChoice();
+underscoresDiv.textContent = game.printGuessedWord();
 
 document.onkeyup = function (event) {
 
-    // Determines which key was pressed.
+    // Determines which key was pressed.  Check if it's a string
     var userGuess = event.key.toLowerCase();
-
-    game.lettersGuessed.push(userGuess);
-
-    lettersPickedByUser.textContent += userGuess;
-    underscores.textContent = game.isLetterMatching(userGuess);
-    guessRemaining.textContent = game.numberOfGuesses;
+    if(allLetter(userGuess)){
+        game.userPick = userGuess;
+        lettersPickedByUserDiv.textContent += userGuess;
+        underscoresDiv.textContent = game.isLetterMatching(userGuess);
+        guessRemainingDiv.textContent = game.numberOfGuesses;
+          
+        if(game.isWordComplete()){
+            lettersPickedByUserDiv.textContent = "YOU WON!";
+            game.wins++;
+            winsDiv.textContent = game.wins;
+        }
+        if(game.numberOfGuesses === 0){
+            lettersPickedByUserDiv.textContent = "YOU LOST!";
+            game.losses++;
+            lossesDiv.textContent = game.losses;
+        }
+    }
+    else {
+        alert("Please enter a letter");
+    }   
 
 }
+
+document.getElementById("new-word").onclick = function() {
+    game.playNewWord(); 
+    computerChoiceDiv.textContent = game.computerChoice();
+    underscoresDiv.textContent = game.printGuessedWord();
+    guessRemainingDiv.textContent = game.numberOfGuesses;
+    lettersPickedByUserDiv.textContent = "";
+    
+};
+document.getElementById("new-game").onclick = function() {
+    location.reload(true);
+}
+
+function allLetter(inputtxt)
+  {
+   var letters = /^[A-Za-z]+$/;
+   if(inputtxt.match(letters))
+     {
+      return true;
+     }
+   else
+     {
+     return false;
+     }
+  }

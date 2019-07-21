@@ -13,24 +13,16 @@
 </head>
 
 <body>
-    <!-- <div class="jumbotron jumbotron-fluid">
+    <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4">Outdoor Life Game</h1>
-            <p class="lead"></p>
+            <h1 class="display-4">Outdoor Life Word Game</h1>
             <hr class="my-4">
         </div>
-    </div> -->
-    <div class="card bg-dark text-white">
-            <img src="assets/images/dolomites.jpg" class="card-img" alt="...">
-            <div class="card-img-overlay">
-              <h3 class="card-title">Outdoor Life Words Game</h5>
-
-            </div>
-          </div>
+    </div>
     <div class="container mt-4 midsection">
         <div class="row justify-content-center">
             <div class="col-md-8 my-2">
-                <h3>Press any key to get started!</h3>
+                <h6>Press any key to get started!</h6>
                 <hr>
             </div>
         </div>
@@ -45,12 +37,20 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-4">
-                Word
+                Losses
             </div>
-            <div id="computer-word" class="col-md-3">
+            <div id="losses" class="col-md-3">
 
             </div>
         </div>
+        <div class="row justify-content-center hidden">
+                <div class="col-md-4">
+                    Computer Word
+                </div>
+                <div id="computer-word" class="col-md-3">
+    
+                </div>
+            </div>
         <div class="row justify-content-center">
             <div class="col-md-4">
                 Letters
@@ -76,10 +76,23 @@
                 <span></span>
             </div>
         </div>
+        <div class="row justify-content-center">
+                <div class="col-md-4 my-4">
+                    <button type="button" id="new-word" class="btn btn-info">New Word</button>
+                </div>
+        </div>
+        <div class="row justify-content-center">
+                <div class="col-md-4 my-4">
+                    <button type="button" id="new-game" class="btn btn-info">Reset New Game!</button>
+                </div>
+        </div>
 
     </div>
-</body>
 
-<script src="assets/javascript/game.js"></script>
+</body>
+<footer> <a href="https://pngtree.com/free-backgrounds">free background photos from pngtree.com</a></footer>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="assets/javascript/game.js"></script> 
 
 </html>

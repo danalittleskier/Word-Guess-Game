@@ -1,38 +1,25 @@
 body {
-
+    background-image: url("../images/trees.png"); 
     height: 100%;
     margin: 0;
     padding: 0;
     font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
-    font-size: 18px;
+    font-size: 14px;
     color: #777777;
     line-height: 150%;
     
 }
 .jumbotron {
-    background-image: url("../images/dolomites.jpg"); 
+    background-image: url("../images/LakeMountain2.jpg");
+    background-size:  cover; 
+    background-position: center, center;
+    background-repeat: no-repeat; 
     text-align: center;
 }
-/* h1 {
-    color:#ffffff;
-    background-color: #4aaaa5;  
-    text-align: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 28px;
-    float: left;
-    margin-bottom: 0;
-
-} */
-
-h3 {
-    color: #4aaaa5;
-    text-align: center; 
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-left: 10px;
+.hidden {
+    display: none;
 }
+
 
 a:link {
     text-decoration: none;
@@ -42,8 +29,8 @@ a:link {
   }
 
   .midsection {
-    width: 600px;
-    height: 600px;
+    width: 500px;
+    height: 400px;
     background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
 }
 
