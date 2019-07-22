@@ -53,7 +53,7 @@ var game = {
         }
     },
 
-    playNewWord: function(){
+    clearGameData: function(){
         this.computerPick = "";
         this.userPick = "";
         this.numberOfGuesses = 12;
@@ -87,6 +87,9 @@ document.onkeyup = function (event) {
 
     // Determines which key was pressed.  Check if it's a string
     var userGuess = event.key.toLowerCase();
+    if(lettersPickedByUserDiv.textContent === "YOU WON!" || lettersPickedByUserDiv.textContent === "YOU LOST!"){
+        playNewWord();
+    }
     if(allLetter(userGuess)){
         game.userPick = userGuess;
         lettersPickedByUserDiv.textContent += userGuess;
@@ -95,12 +98,10 @@ document.onkeyup = function (event) {
           
         if(game.isWordComplete()){
             lettersPickedByUserDiv.textContent = "YOU WON!";
-            game.wins++;
             winsDiv.textContent = game.wins;
         }
-        if(game.numberOfGuesses === 0){
+        if(game.noGuessesLeft()){
             lettersPickedByUserDiv.textContent = "YOU LOST!";
-            game.losses++;
             lossesDiv.textContent = game.losses;
         }
     }
@@ -111,15 +112,18 @@ document.onkeyup = function (event) {
 }
 
 document.getElementById("new-word").onclick = function() {
-    game.playNewWord(); 
+    playNewWord();   
+};
+document.getElementById("new-game").onclick = function() {
+    location.reload(true);
+}
+
+function playNewWord(){
+    game.clearGameData(); 
     computerChoiceDiv.textContent = game.computerChoice();
     underscoresDiv.textContent = game.printGuessedWord();
     guessRemainingDiv.textContent = game.numberOfGuesses;
     lettersPickedByUserDiv.textContent = "";
-    
-};
-document.getElementById("new-game").onclick = function() {
-    location.reload(true);
 }
 
 function allLetter(inputtxt)
