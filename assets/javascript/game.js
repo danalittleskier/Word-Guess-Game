@@ -1,3 +1,4 @@
+//Variables that store the html div content
 var lettersPickedByUserDiv = document.getElementById("letters-picked");
 var underscoresDiv = document.getElementById("underscores");
 var guessRemainingDiv = document.getElementById("guess-remaining");
@@ -5,6 +6,7 @@ var computerChoiceDiv = document.getElementById("computer-word");
 var lossesDiv = document.getElementById("losses");
 var winsDiv = document.getElementById("wins");
 
+//Game object with properties and functions
 var game = {
     wins: 0,
     losses: 0,
@@ -14,7 +16,7 @@ var game = {
     underscoreArray: [],
     lettersGuessed: [],
     wordOptions: ["mountain", "peak", "pinetree", "lake", "tent", "hike", "raft", "forest"],
-
+    //Checks if user input is matching on the word picked letters and replaces underscores or decreases losses
     isLetterMatching: function (letter) {
         var matched = false;
 
@@ -80,16 +82,19 @@ var game = {
 
 }
 
+//Create new game at page load
 computerChoiceDiv.textContent = game.computerChoice();
 underscoresDiv.textContent = game.printGuessedWord();
 
 document.onkeyup = function (event) {
 
-    // Determines which key was pressed.  Check if it's a string
+    // Determines which key was pressed.  
     var userGuess = event.key.toLowerCase();
+    // Checks if a new game needs to be created
     if(lettersPickedByUserDiv.textContent === "YOU WON!" || lettersPickedByUserDiv.textContent === "YOU LOST!"){
         playNewWord();
     }
+    // Is the key pressed a letter 
     if(allLetter(userGuess)){
         game.userPick = userGuess;
         lettersPickedByUserDiv.textContent += userGuess;
@@ -111,13 +116,16 @@ document.onkeyup = function (event) {
 
 }
 
+//Button to create new word
 document.getElementById("new-word").onclick = function() {
     playNewWord();   
 };
+//Button to create new game
 document.getElementById("new-game").onclick = function() {
     location.reload(true);
 }
 
+//Function that creates new word and updates the html
 function playNewWord(){
     game.clearGameData(); 
     computerChoiceDiv.textContent = game.computerChoice();
