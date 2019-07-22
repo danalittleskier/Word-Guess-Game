@@ -73,7 +73,7 @@ var game = {
 
     computerChoice: function () {
         // Randomly chooses a choice from the options array. This is the Computer's guess.
-        game.computerPick = this.wordOptions[Math.floor(Math.random() * this.wordOptions.length)];
+        game.computerPick = this.wordOptions[Math.floor(Math.random() * this.wordOptions.length)].toUpperCase();
         for (let index = 0; index < this.computerPick.length; index++) {
             this.underscoreArray.push("_");
         }
@@ -89,13 +89,13 @@ underscoresDiv.textContent = game.printGuessedWord();
 document.onkeyup = function (event) {
 
     // Determines which key was pressed.  
-    var userGuess = event.key.toLowerCase();
+    var userGuess = event.key.toUpperCase();
     // Checks if a new game needs to be created
     if(lettersPickedByUserDiv.textContent === "YOU WON!" || lettersPickedByUserDiv.textContent === "YOU LOST!"){
         playNewWord();
     }
     // Is the key pressed a letter 
-    if(allLetter(userGuess)){
+    if(userGuess.length === 1 && allLetter(userGuess)){
         game.userPick = userGuess;
         lettersPickedByUserDiv.textContent += userGuess;
         underscoresDiv.textContent = game.isLetterMatching(userGuess);
