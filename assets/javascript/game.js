@@ -14,25 +14,27 @@ var game = {
     userPick: "",
     numberOfGuesses: 12,
     underscoreArray: [],
-    lettersGuessed: [],
+    lettersMatched: [],
+    lettersMissed: [],
     wordOptions: ["mountain", "peak", "pinetree", "lake", "tent", "hike", "raft", "forest"],
     //Checks if user input is matching on the word picked letters and replaces underscores or decreases losses
     isLetterMatching: function (letter) {
         var matched = false;
 
-        if(this.lettersGuessed.includes(letter)){
+        if(this.lettersMatched.includes(letter) || this.lettersMissed.includes(letter)){
             matched = true;
         } 
         else {
             for (let i = 0; i < this.computerPick.length; i++) {
                 if (letter === this.computerPick[i]) {
                     this.underscoreArray[i] = this.computerPick[i];
-                    this.lettersGuessed.push(letter);
+                    this.lettersMatched.push(letter);
                     matched = true;
                 }
             }
         }    
         if (matched === false) {
+            this.lettersMissed.push(letter);
             this.numberOfGuesses--;
         }
         return this.printGuessedWord();
@@ -43,6 +45,15 @@ var game = {
         for (let index = 0; index < this.underscoreArray.length; index++) {
             result += " " + this.underscoreArray[index] + " ";
         }
+        return result;
+    },
+
+    printGuessedArray: function(){
+        var result = "";
+        this.lettersMissed.forEach(function(item, index, array) {
+            result += item;
+            console.log(result);
+          });
         return result;
     },
 
@@ -60,7 +71,8 @@ var game = {
         this.userPick = "";
         this.numberOfGuesses = 12;
         this.underscoreArray = [];
-        this.lettersGuessed = [];
+        this.lettersMissed = [];
+        this.lettersMatched = [];
     },
 
     noGuessesLeft: function () {
@@ -97,8 +109,8 @@ document.onkeyup = function (event) {
     // Is the key pressed a letter 
     if(userGuess.length === 1 && allLetter(userGuess)){
         game.userPick = userGuess;
-        lettersPickedByUserDiv.textContent += userGuess;
         underscoresDiv.textContent = game.isLetterMatching(userGuess);
+        lettersPickedByUserDiv.textContent = game.printGuessedArray();       
         guessRemainingDiv.textContent = game.numberOfGuesses;
           
         if(game.isWordComplete()){
@@ -134,6 +146,7 @@ function playNewWord(){
     lettersPickedByUserDiv.textContent = "";
 }
 
+//Function to check if input is of type letter
 function allLetter(inputtxt)
   {
    var letters = /^[A-Za-z]+$/;
